@@ -12,7 +12,9 @@ The arena has a shape gien, with the wall represented by the golden tokens in wh
 
 ### Robot
 The robot is the following:
+
 ![robot](https://user-images.githubusercontent.com/62358773/139511645-fd261847-0718-4f19-81db-dba9c4161575.jpg)
 
 It has distance sensors on all sides, so it can detect a wall from -180° to 180°; the reference of 0° is the front direction, the angle increase by moving in clockwise direction taking as reference the 0° position.
+
 ![robot_angles](https://user-images.githubusercontent.com/62358773/139511937-7311faf7-3df1-49b8-9a40-84ec452cc0fa.jpg)
