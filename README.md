@@ -43,4 +43,6 @@ if R.grab():
 else:
     print("Aww, I'm not close enough.")
 ```
-so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly.
+so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; ot release the token it is used the `R.release()` function.
+
+
