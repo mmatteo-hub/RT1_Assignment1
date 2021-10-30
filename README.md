@@ -21,3 +21,9 @@ It has distance sensors on all sides, so it can detect a wall from -180° to 180
 ![robot_angles](https://user-images.githubusercontent.com/62358773/139511937-7311faf7-3df1-49b8-9a40-84ec452cc0fa.jpg)
 
 #### Internal structure
+##### Motors
+The simulated robot is provided of two motors which are responsible of the robot movement: for example to turn on the spot of half, so to put on the reverse the code will be:
+```python
+R.motors[0].m0.power = 50
+R.motors[0].m0.power = -50
+```
