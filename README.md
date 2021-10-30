@@ -31,8 +31,8 @@ R.motors[0].m0.power = -50
 The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of 0.4 metres (this value is not fixed but it is a good measure for the robot dimensions). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value depending on what the robot has done. The piece of code we use is:
 ```python
 if R.grab()
-  ...
+
 else
-  ...
+
 ```
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly.
