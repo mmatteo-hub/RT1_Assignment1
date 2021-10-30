@@ -33,10 +33,10 @@ The robot, as already said, has two arms (grabbers) able to pick up the silver t
 if R.grab(): 
     print("Gotcha!")
     turn(vTurn, 3)
-	R.release()
-	print("Released")
-	turn(-vTurn,3)
-	print("Move on!!!")
+    R.release()
+    print("Released")
+    turn(-vTurn,3)
+    print("Move on!!!")
 else:
     print("Aww, I'm not close enough.")
 ```
