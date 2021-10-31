@@ -27,6 +27,8 @@ The simulated robot is provided of two motors which are responsible of the robot
 R.motors[0].m0.power = 50
 R.motors[0].m0.power = -50
 ```
+THe function used to activate the motor are `drive(speed,time)` and `turn(speed,time)`which makes the robot go straight, for a certain time `time` at a certain speed `speed`, and turn, always for a certain time `time` and at a certain speed `speed`; as the robot is made a `speed` > 0 makes the robot turn clockwise and if `speed` < 0 on the opposite.
+
 #### Grab
 The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of 0.4 metres (this value is not fixed but it is a good measure for the robot dimensions). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value depending on what the robot has done. The piece of code we use is:
 ```python
