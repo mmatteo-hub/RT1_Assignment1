@@ -59,7 +59,7 @@ def fnc_in():
 	drive(2*vDrive,0.2)
 	avoid_collision()
 ```
-there is the function `drive(speed,time)`already described and the `avoid collision()`, responsible of making the robot stay far from the wall. This function is:
+there is the function `drive(speed,time)`, already described, and the `avoid collision()`, responsible of making the robot stay far from the wall. This function is:
 ```python
 def avoid_collision():
 	dist,rot,boolean = wall_check(0) # Robot watches in front of it to detect the wall distance, rotation and if it is present
