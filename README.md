@@ -51,6 +51,33 @@ so if the `R.grab()` is successful the robot will move the token backward, other
 Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
 
-[main.pdf](https://github.com/mmatteo-hub/Assignment1/files/7452376/main.pdf)
+![main](https://user-images.githubusercontent.com/62358773/139657231-093e1cf8-2bac-422a-8ffe-86e34e876ab3.jpg)
 
-
+The first function is the `fnc_in()` which makes the robot starting the movement, it is structured as follows:
+```python
+def fnc_in():
+	drive(2*vDrive,0.2)
+	avoid_collision()
+```
+there is the function `drive(speed,time)`already described and the `avoid collision()`, responsible of making the robot stay far from the wall. This function is:
+```python
+def avoid_collision():
+	dist,rot,boolean = wall_check(0) # Robot watches in front of it to detect the wall distance, rotation and if it is present
+	dist_r,rot_r,boolean_r = wall_check(90) # Robot watches on its right to detect a wall
+	dist_l,rot_l,boolean_l = wall_check(-90) # Robot watches on its left to detect a wall
+	if dist_r == -1 or dist_l == -1:
+		print("No walls...")
+	if dist_r > dist_l:
+		print("Wall on my left ... turn right!")
+		while(dist < free_th): # Turn until it is free to move; re-calculates the distance from the wall
+			turn(vTurn, 0.2)
+			dist,rot,boolean = wall_check(0)
+		print("OK, now it's ok.")
+	else:
+		print("Wall on my right ... turn left!")
+		while(dist < free_th):
+			turn(-vTurn, 0.2) # Turn until it is free to move; re-calculates the distance from the wall
+			dist,rot,boolean = wall_check(0)
+		print("OK, now it's ok.")	
+```
+it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left; then there are several conditions that can make the program decide if the wall is on the right and if it is on the left: using a `while` loop the robot can rotate till the distance from the wall detected is sufficient to make it start again the driving action.
