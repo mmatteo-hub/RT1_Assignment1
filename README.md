@@ -110,10 +110,10 @@ it allows the robot checking the presence of a wall in a particular direction, d
 As it can be seen the wall are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from the token (`MARKER_TOKEN_SILVER`).
 
 the main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and
-  - if `d`< `dist`it means there is a wall so the program starts again the `avoid_collision()`
-  - otherwise there are no dangerous wall so the robot can catch the token
+	* if `d`< `dist`it means there is a wall so the program starts again the `avoid_collision()`
+	* otherwise there are no dangerous wall so the robot can catch the token
 
-* `catch_token()`
+* `catch_token()`:
 ```python
 def catch_token(dist,rot_y):
 	if dist <= d_th:
