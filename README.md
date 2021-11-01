@@ -47,4 +47,10 @@ else:
 ```
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; ot release the token it is used the `R.release()` function.
 
+### Code: main
+Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
+Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
+
+[main.pdf](https://github.com/mmatteo-hub/Assignment1/files/7452376/main.pdf)
+
 
