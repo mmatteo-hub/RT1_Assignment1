@@ -29,6 +29,15 @@ R.motors[0].m0.power = -50
 ```
 THe function used to activate the motor are `drive(speed,time)` and `turn(speed,time)`which makes the robot go straight, for a certain time `time` at a certain speed `speed`, and turn, always for a certain time `time` and at a certain speed `speed`; as the robot is made a `speed` > 0 makes the robot turn clockwise and if `speed` < 0 on the opposite.
 
+### Token
+Tokens are of two types, as it can be seen in the arean picture.
+Each of them is a `Marker` and is characterised by many properties which describe all its characteristic and. position in the space. The mainly used in the program are:
+* `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
+  * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_GOLD`, `MARKER_TOKEN_SILVER`).
+  * `dist`: an alias for `centre.length`
+  * `rot_y`: an alias for `centre.rot_y`
+
+## Functions used
 #### Grab
 The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of 0.4 metres (this value is not fixed but it is a good measure for the robot dimensions). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value depending on what the robot has done. The piece of code we use is:
 ```python
