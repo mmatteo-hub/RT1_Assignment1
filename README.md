@@ -81,3 +81,17 @@ def avoid_collision():
 		print("OK, now it's ok.")	
 ```
 it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left; then there are several conditions that can make the program decide if the wall is on the right and if it is on the left: using a `while` loop the robot can rotate till the distance from the wall detected is sufficient to make it start again the driving action.
+The function `wall_check(rot_token)` seen is:
+```python
+def wall_check(rot_token):
+	dist=100
+    	for token in R.see():
+        	if token.dist < dist and token.info.marker_type is MARKER_TOKEN_GOLD and (rot_token - view_range) <= token.rot_y <= (rot_token + view_range):
+            		dist=token.dist
+	    		rot_y=token.rot_y
+    	if dist==100:
+		return -1, -1, False
+    	else:
+   		return dist, rot_y, True
+```
+it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
