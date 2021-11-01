@@ -109,9 +109,7 @@ def wall_check(rot_token):
 it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
 As it can be seen the wall are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from the token (`MARKER_TOKEN_SILVER`).
 
-the main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and
-	* if `d`< `dist`it means there is a wall so the program starts again the `avoid_collision()`
-	* otherwise there are no dangerous wall so the robot can catch the token
+the main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`it means there is a wall so the program starts again the `avoid_collision()`, otherwise there are no dangerous wall so the robot can catch the token
 
 * `catch_token()`:
 ```python
@@ -137,3 +135,50 @@ def catch_token(dist,rot_y):
 		turn(+vTurn_dir, 0.5)
 ```
 this function drives the robot to catch the token  by making some corrections during the movement.
+
+The program contains also the `find_silver_token()` defined as:
+
+```python
+def find_silver_token():
+	dist=100
+    	for token in R.see():
+        	if token.dist < dist and token.info.marker_type is MARKER_TOKEN_SILVER and -see_angle <= token.rot_y <= see_angle:
+            		dist=token.dist
+	    		rot_y=token.rot_y
+    	if dist==100:
+		return -1, -1
+    	else:
+   		return dist, rot_y
+```
+and a set of global variables, in order to have a better adaptation to any corrections:
+```python
+a_th = 2.0
+""" float: Threshold for the control of the linear distance"""
+
+d_th = 0.4
+""" float: Threshold for the control of the orientation"""
+
+wall_th = 0.5
+"""float: Distance to detect a wall"""
+
+free_th = 1.0
+"""float: Distance to detect if the robot is free to drive or not"""
+
+R = Robot()
+""" instance of the class Robot"""
+
+view_range = 35
+"""int: Range of view for the Robot"""
+
+see_angle = 45
+"""int: Angle of vision for the robot to detect the silver token"""
+
+vTurn = 20
+"""int: Velocity module for turning"""
+
+vTurn_dir = 4
+"""int: Velocity module for turning while nearby a wall"""
+
+vDrive = 20
+"""int: Velocity module for driving"""
+```
