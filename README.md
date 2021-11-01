@@ -95,3 +95,4 @@ def wall_check(rot_token):
    		return dist, rot_y, True
 ```
 it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
+As it can be seen the wall are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from the token (`MARKER_TOKEN_SILVER`).
