@@ -65,7 +65,8 @@ Each of them is a `Marker` and is characterised by many properties which describ
   * `dist`: an alias for `centre.length`
   * `rot_y`: an alias for `centre.rot_y`
 
-### Code: main<img src="https://user-images.githubusercontent.com/62358773/139832508-71fd85c3-a89e-4286-a964-c3abbc6506ee.gif" width="50"></h3>
+### Code: main
+<img src="https://user-images.githubusercontent.com/62358773/139832508-71fd85c3-a89e-4286-a964-c3abbc6506ee.gif" width="50"></h2>
 
 Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
