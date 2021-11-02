@@ -139,10 +139,10 @@ def catch_token(dist,rot_y):
 		drive(vDrive, 0.5)
 	elif rot_y < -a_th: 
 		print("Left a bit...")
-		turn(-vTurn_dir, 0.5)
+		turn(-vTurn_dir, 0.25)
 	elif rot_y > a_th:
 		print("Right a bit...")
-		turn(+vTurn_dir, 0.5)
+		turn(+vTurn_dir, 0.25)
 ```
 this function drives the robot to catch the token  by making some corrections during the movement.
 
