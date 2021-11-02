@@ -2,6 +2,7 @@
 
 ## Running the code
 <img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="75"></h2>
+
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
 Once the dependencies are installed, simply run the `test.py` script to test out the simulator as: `python2 run.py file.py` where `file.py` contains the code.
