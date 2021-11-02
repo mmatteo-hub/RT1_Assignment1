@@ -1,5 +1,6 @@
 # Assignment 1
 ## Running the code
+<img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="50"></h2>
 
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
@@ -139,10 +140,10 @@ def catch_token(dist,rot_y):
 		drive(vDrive, 0.5)
 	elif rot_y < -a_th: 
 		print("Left a bit...")
-		turn(-vTurn_dir, 0.5)
+		turn(-vTurn_dir, 0.25)
 	elif rot_y > a_th:
 		print("Right a bit...")
-		turn(+vTurn_dir, 0.5)
+		turn(+vTurn_dir, 0.25)
 ```
 this function drives the robot to catch the token  by making some corrections during the movement.
 
