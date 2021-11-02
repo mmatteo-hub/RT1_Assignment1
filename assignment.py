@@ -9,10 +9,7 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
-wall_th = 0.3
-"""float: Distance to detect a wall"""
-
-free_th = 1.0
+free_th = 0.9
 """float: Distance to detect if the robot is free to drive or not"""
 
 R = Robot()
@@ -77,13 +74,13 @@ def avoid_collision():
 		print("No walls...")
 	if dist_r > dist_l:
 		print("Wall on my left ... turn right!")
-		while(dist < free_th): # Turn until it is free to move; re-calculates the distance from the wall
+		while(free_th > dist): # Turn until it is free to move; re-calculates the distance from the wall
 			turn(vTurn, 0.2)
 			dist,rot,boolean = wall_check(0)
 		print("OK, now it's ok.")
 	else:
 		print("Wall on my right ... turn left!")
-		while(dist < free_th):
+		while(free_th > dist):
 			turn(-vTurn, 0.2) # Turn until it is free to move; re-calculates the distance from the wall
 			dist,rot,boolean = wall_check(0)
 		print("OK, now it's ok.")	
@@ -104,14 +101,15 @@ def catch_token(dist,rot_y):
 		drive(vDrive, 0.5)
 	elif rot_y < -a_th: 
 		print("Left a bit...")
-		turn(-vTurn_dir, 0.5)
+		turn(-vTurn_dir, 0.25)
 	elif rot_y > a_th:
 		print("Right a bit...")
-		turn(+vTurn_dir, 0.5)
+		turn(+vTurn_dir, 0.25)
 	
 def fnc_in():
-	drive(2*vDrive,0.2)
+	drive(2*vDrive,0.1)
 	avoid_collision()
+	drive(vDrive,0.1)
 	
 	
 def main():
