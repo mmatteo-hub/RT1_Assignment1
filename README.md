@@ -1,6 +1,5 @@
 # Assignment 1
 ## Running the code
-<img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="50"></h2>
 
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
@@ -66,7 +65,6 @@ Each of them is a `Marker` and is characterised by many properties which describ
   * `rot_y`: an alias for `centre.rot_y`
 
 ### Code: main
-<img src="https://user-images.githubusercontent.com/62358773/139832508-71fd85c3-a89e-4286-a964-c3abbc6506ee.gif" width="75"></h2>
 
 Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
