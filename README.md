@@ -168,10 +168,7 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
-wall_th = 0.5
-"""float: Distance to detect a wall"""
-
-free_th = 1.0
+free_th = 0.85
 """float: Distance to detect if the robot is free to drive or not"""
 
 R = Robot()
