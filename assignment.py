@@ -6,7 +6,7 @@ from sr.robot import *
 a_th = 2.0
 """ float: Threshold for the control of the linear distance"""
 
-d_th = 0.4
+d_th = 0.6
 """ float: Threshold for the control of the orientation"""
 
 free_th = 0.85
@@ -21,13 +21,13 @@ view_range = 35
 see_angle = 45
 """int: Angle of vision for the robot to detect the silver token"""
 
-vTurn = 20
+vTurn = 40
 """int: Velocity module for turning"""
 
-vTurn_dir = 4
+vTurn_dir = 9
 """int: Velocity module for turning while nearby a wall"""
 
-vDrive = 20
+vDrive = 40
 """int: Velocity module for driving"""
 
 def drive(speed, seconds):
@@ -75,13 +75,13 @@ def avoid_collision():
 	if dist_r > dist_l:
 		print("Wall on my left ... turn right!")
 		while(free_th > dist): # Turn until it is free to move; re-calculates the distance from the wall
-			turn(vTurn, 0.2)
+			turn(vTurn, 0.25)
 			dist,rot,boolean = wall_check(0)
 		print("OK, now it's ok.")
 	else:
 		print("Wall on my right ... turn left!")
 		while(free_th > dist):
-			turn(-vTurn, 0.2) # Turn until it is free to move; re-calculates the distance from the wall
+			turn(-vTurn, 0.25) # Turn until it is free to move; re-calculates the distance from the wall
 			dist,rot,boolean = wall_check(0)
 		print("OK, now it's ok.")	
 	
@@ -90,10 +90,11 @@ def catch_token(dist,rot_y):
       		print("Found it!")
       		if R.grab(): 
       			print("Gotcha!")
-    			turn(vTurn, 3)
+    			turn(vTurn, 1.5)
 	    		R.release()
 	    		print("Released")
-	    		turn(-vTurn,3)
+	    		drive(-vDrive/2,0.8)
+	    		turn(-vTurn,1.5)
 	    		print("Move on!!!")
 		else:
             		print("Aww, I'm not close enough.")
@@ -101,15 +102,15 @@ def catch_token(dist,rot_y):
 		drive(vDrive, 0.5)
 	elif rot_y < -a_th: 
 		print("Left a bit...")
-		turn(-vTurn_dir, 0.25)
+		turn(-vTurn_dir, 0.2)
 	elif rot_y > a_th:
 		print("Right a bit...")
-		turn(+vTurn_dir, 0.25)
+		turn(+vTurn_dir, 0.2)
 	
 def fnc_in():
 	drive(2*vDrive,0.1)
 	avoid_collision()
-	drive(vDrive,0.1)
+	drive(2*vDrive,0.1)
 	
 def main():
 	while 1:
