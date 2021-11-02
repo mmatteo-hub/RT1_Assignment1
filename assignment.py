@@ -9,7 +9,7 @@ a_th = 2.0
 d_th = 0.4
 """ float: Threshold for the control of the orientation"""
 
-free_th = 0.9
+free_th = 0.85
 """float: Distance to detect if the robot is free to drive or not"""
 
 R = Robot()
@@ -110,7 +110,6 @@ def fnc_in():
 	drive(2*vDrive,0.1)
 	avoid_collision()
 	drive(vDrive,0.1)
-	
 	
 def main():
 	while 1:
