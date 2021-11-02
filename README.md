@@ -14,11 +14,9 @@ The arena has a shape gien, with the wall represented by the golden tokens in wh
 #### Physical structure
 The robot is the following:
 
-![robot](https://user-images.githubusercontent.com/62358773/139511645-fd261847-0718-4f19-81db-dba9c4161575.jpg)
+![robot](https://user-images.githubusercontent.com/62358773/139828348-cc5e2ea0-5f71-447a-ac7f-8b7ef74f3324.png)
 
 It has distance sensors on all sides, so it can detect a wall from -180° to 180°; the reference of 0° is the front direction, the angle increase by moving in clockwise direction taking as reference the 0° position and decrease in the other rotation direction.
-
-![robot_angles](https://user-images.githubusercontent.com/62358773/139511937-7311faf7-3df1-49b8-9a40-84ec452cc0fa.jpg)
 
 #### Internal structure
 ##### Motors
@@ -51,7 +49,12 @@ so if the `R.grab()` is successful the robot will move the token backward, other
 Tokens are of two types, as it can be seen in the arean picture.
 Each of them is a `Marker` and is characterised by many properties which describe all its characteristic and. position in the space. The mainly used in the program are:
 * `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
-  * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_GOLD`, `MARKER_TOKEN_SILVER`).
+  * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_SILVER`, `MARKER_TOKEN_GOLD`).
+  
+![token_silver](https://user-images.githubusercontent.com/62358773/139828770-26c0fea8-876d-490b-9c89-9173f6215e67.png)
+
+![token_gold](https://user-images.githubusercontent.com/62358773/139828777-54f416ae-9134-4a63-ad3a-b95030e8d72c.png)
+
   * `dist`: an alias for `centre.length`
   * `rot_y`: an alias for `centre.rot_y`
 
