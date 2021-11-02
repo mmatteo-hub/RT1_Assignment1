@@ -1,6 +1,10 @@
 # Assignment 1
 ## Running the code
-The simulator requires a Python 2.7 installation in order to run the `run.py` file; the file containing the code for the robot behaviour is `assignment.py`.
+<img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="50"></h2>
+
+The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
+
+Once the dependencies are installed, simply run the `test.py` script to test out the simulator as: `python2 run.py file.py` where `file.py` contains the code.
 
 ## Goal of the assignment
 The goal for this assignment is to make a robot move continuously around a specific arena: the robot cannot touch any wall, representeed by the golden tokens, while has to grab all the silver tokens met along the path and put them backward. Once it has completed this action it has to move on and continues as before.
@@ -19,11 +23,14 @@ The robot is the following:
 It has distance sensors on all sides, so it can detect a wall from -180° to 180°; the reference of 0° is the front direction, the angle increase by moving in clockwise direction taking as reference the 0° position and decrease in the other rotation direction.
 
 #### Internal structure
-##### Motors
-The simulated robot is provided of two motors which are responsible of the robot movement: for example to turn on the spot of half, so to put on the reverse the code will be:
+##### Motors: Robot API
+The simulated robot has two motors configured for skid steering, connected to a two-output [Motor Board](https://studentrobotics.org/docs/kit/motor_board). The left motor is connected to output `0` and the right motor to output `1`.
+
+The Motor Board API is identical to [that of the SR API](https://studentrobotics.org/docs/programming/sr/motors/), except that motor boards cannot be addressed by serial number. So, to turn on the spot at one quarter of full power, one might write the following:
+
 ```python
-R.motors[0].m0.power = 50
-R.motors[0].m0.power = -50
+R.motors[0].m0.power = 25
+R.motors[0].m1.power = -25
 ```
 THe function used to activate the motor are `drive(speed,time)` and `turn(speed,time)`which makes the robot go straight, for a certain time `time` at a certain speed `speed`, and turn, always for a certain time `time` and at a certain speed `speed`; as the robot is made a `speed` > 0 makes the robot turn clockwise and if `speed` < 0 on the opposite.
 
@@ -59,6 +66,8 @@ Each of them is a `Marker` and is characterised by many properties which describ
   * `rot_y`: an alias for `centre.rot_y`
 
 ### Code: main
+<img src="https://user-images.githubusercontent.com/62358773/139832508-71fd85c3-a89e-4286-a964-c3abbc6506ee.gif" width="75"></h2>
+
 Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
 
