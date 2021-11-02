@@ -1,4 +1,4 @@
-# Assignment 1<img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="50"></h2>
+# Assignment 1 <img src="https://user-images.githubusercontent.com/62358773/139832114-25715dd0-508b-4fca-9c20-05c2cc74376f.gif" width="75"></h2>
 
 ## Running the code
 
