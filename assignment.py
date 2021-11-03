@@ -24,7 +24,7 @@ see_angle = 45
 vTurn = 40
 """int: Velocity module for turning"""
 
-vTurn_dir = 9
+vTurn_dir = 9.5
 """int: Velocity module for turning while nearby a wall"""
 
 vDrive = 40
@@ -110,7 +110,6 @@ def catch_token(dist,rot_y):
 def fnc_in():
 	drive(2*vDrive,0.1)
 	avoid_collision()
-	drive(2*vDrive,0.1)
 	
 def main():
 	while 1:
