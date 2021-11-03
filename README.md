@@ -33,10 +33,10 @@ The Motor Board API is identical to [that of the SR API](https://studentrobotics
 R.motors[0].m0.power = 25
 R.motors[0].m1.power = -25
 ```
-THe function used to activate the motor are `drive(speed,time)` and `turn(speed,time)`which makes the robot go straight, for a certain time `time` at a certain speed `speed`, and turn, always for a certain time `time` and at a certain speed `speed`; as the robot is made a `speed` > 0 makes the robot turn clockwise and if `speed` < 0 on the opposite.
+The functions used to activate the motor are `drive(speed,time)` and `turn(speed,time)`: the first one makes the robot go straight, for a certain time `time` at a certain speed `speed`, while the second makes it turn, always for a certain time `time` and at a certain speed `speed`; as the robot is given a `speed` > 0 it makes it turn clockwise and if `speed` < 0 on the opposite.
 
 #### Grab/Release functions
-The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of 0.4 metres (this value is not fixed but it is a good measure for the robot dimensions). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value depending on what the robot has done. The piece of code we use is:
+The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of `d_th` metres (this value is not fixed and it is defined as 0.6 in the code). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value, `True`or `False` depending on what the robot has done. The piece of code we use is:
 ```python
 vTurn = 40
 """int: Velocity module for turning"""
@@ -55,11 +55,27 @@ else:# the R.grab() returns a False boolean so the token cannot be grabbed and t
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; to release the token it is used the `R.release()` function.
 
 ### Token
-Tokens are of two types, as it can be seen in the arean picture.
-Each of them is a `Marker` and is characterised by many properties which describe all its characteristic and. position in the space. The mainly used in the program are:
+Tokens are of two types, as it can be seen in the arena picture.
+Each of them is a `Marker` and is characterised by many properties which describe all its characteristics and position in the space. T
+Each `Marker` object has the following attributes:
+
+* `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
+  * `code`: the numeric code of the marker.
+  * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_GOLD`, `MARKER_TOKEN_SILVER` or `MARKER_ARENA`).
+  * `offset`: offset of the numeric code of the marker from the lowest numbered marker of its type. For example, token number 3 has the code 43, but offset 3.
+  * `size`: the size that the marker would be in the real game, for compatibility with the SR API.
+* `centre`: the location of the marker in polar coordinates, as a `PolarCoord` object. Has the following attributes:
+  * `length`: the distance from the centre of the robot to the object (in metres).
+  * `rot_y`: rotation about the Y axis in degrees.
+* `dist`: an alias for `centre.length`
+* `res`: the value of the `res` parameter of `R.see`, for compatibility with the SR API.
+* `rot_y`: an alias for `centre.rot_y`
+* `timestamp`: the time at which the marker was seen (when `R.see` was called).
+
+although, the mainly used in the program are:
 * `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
   * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_SILVER`, `MARKER_TOKEN_GOLD`).
-  
+    
 ![token_silver](https://user-images.githubusercontent.com/62358773/139828770-26c0fea8-876d-490b-9c89-9173f6215e67.png)
 
 ![token_gold](https://user-images.githubusercontent.com/62358773/139828777-54f416ae-9134-4a63-ad3a-b95030e8d72c.png)
@@ -69,7 +85,7 @@ Each of them is a `Marker` and is characterised by many properties which describ
 
 ### Code: main
 
-Inside the main there is the code to drive the robot around the arena, there are several functions in order to make the code more readable and avoid a single block of code.
+Inside the main there is the code to drive the robot around the arena: there are several functions in order to make the code more readable and avoid having a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
 
 ![main](https://user-images.githubusercontent.com/62358773/139657231-093e1cf8-2bac-422a-8ffe-86e34e876ab3.jpg)
@@ -81,7 +97,9 @@ def fnc_in():
 	drive(2*vDrive,0.1) # this function allows the robot moving forward
 	avoid_collision() # this function allows the robot avoiding the walls while moving
 ```
-there is the function `drive(speed,time)`, already described, and the `avoid collision()`, responsible of making the robot stay far from the wall. 
+there are the function `drive(speed,time)`, already described, and the `avoid collision()`, responsible of making the robot stay far from the wall. 
+
+Below it is described all the functions used in the program.
 
 * `avoid_collision()`:
 ```python
@@ -121,10 +139,10 @@ def wall_check(rot_token):
     	else: # it means a wall has been detected
    		return dist, rot_y, True # in this case, the function return are the distance, the rotation of the wall and a True boolean
 ```
-it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
-As it can be seen the wall are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from the token (`MARKER_TOKEN_SILVER`).
+it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
+As it can be seen walls are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from tokens (`MARKER_TOKEN_SILVER`).
 
-the main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`it means there is a wall so the program starts again the `avoid_collision()`, otherwise there are no dangerous wall so the robot can catch the token
+The main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`, where `dist` represents the token distance, it means there is a wall between the token and the robot so the program starts again the `avoid_collision()`, otherwise with any dangerous wall so the robot can catch the token
 
 * `catch_token()`:
 ```python
@@ -150,7 +168,7 @@ def catch_token(dist,rot_y):
 		print("Right a bit...")
 		turn(+vTurn_dir, 0.2) # if the condition is satified the robot turns on the right
 ```
-this function drives the robot to catch the token  by making some corrections during the movement.
+this function drives the robot to catch the token  by making some corrections during the movement. If the robot is close enough to the token it will grab it, otherwise it will have to move closer.
 
 The program contains also the `find_silver_token()` defined as:
 
