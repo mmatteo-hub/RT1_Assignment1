@@ -38,18 +38,19 @@ THe function used to activate the motor are `drive(speed,time)` and `turn(speed,
 #### Grab/Release functions
 The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of 0.4 metres (this value is not fixed but it is a good measure for the robot dimensions). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value depending on what the robot has done. The piece of code we use is:
 ```python
-vTurn = 20
-"""int: Velocity module for turn"""
+vTurn = 40
+"""int: Velocity module for turning"""
 
-if R.grab(): 
-    print("Gotcha!")
-    turn(vTurn, 3)
-    R.release()
-    print("Released")
-    turn(-vTurn,3)
-    print("Move on!!!")
-else:
-    print("Aww, I'm not close enough.")
+if R.grab(): # returns a True boolean if the robot has been able to grab the token
+	print("Gotcha!")
+    	turn(vTurn, 1.5) # turns right (clockwise) to put the token backward, in respect to its current direction
+	R.release() # releases the token
+	print("Released")
+	drive(-vDrive/2,0.8) # drive backward to take space for the next action
+	turn(-vTurn,1.5) # turns again, this time on the left (anticlockwise) to re-take the direction and proceed in the arena
+	print("Move on!!!")
+else:# the R.grab() returns a False boolean so the token cannot be grabbed and the robot has to move nearer to it
+        print("Aww, I'm not close enough.")
 ```
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; to release the token it is used the `R.release()` function.
 
@@ -77,8 +78,8 @@ Thanks to a flowchart it can be described the general structure, moreover also t
 The first function is the `fnc_in()` which makes the robot starting the movement, it is structured as follows:
 ```python
 def fnc_in():
-	drive(2*vDrive,0.2)
-	avoid_collision()
+	drive(2*vDrive,0.1) # this function allows the robot moving forward
+	avoid_collision() # this function allows the robot avoiding the walls while moving
 ```
 there is the function `drive(speed,time)`, already described, and the `avoid collision()`, responsible of making the robot stay far from the wall. 
 
@@ -88,19 +89,19 @@ def avoid_collision():
 	dist,rot,boolean = wall_check(0) # Robot watches in front of it to detect the wall distance, rotation and if it is present
 	dist_r,rot_r,boolean_r = wall_check(90) # Robot watches on its right to detect a wall
 	dist_l,rot_l,boolean_l = wall_check(-90) # Robot watches on its left to detect a wall
-	if dist_r == -1 or dist_l == -1:
+	if dist_r == -1 or dist_l == -1: # Conditions of not wall detected
 		print("No walls...")
-	if dist_r > dist_l:
+	if dist_r > dist_l: # Check if the left wall is nearer than the right one
 		print("Wall on my left ... turn right!")
-		while(dist < free_th): # Turn until it is free to move; re-calculates the distance from the wall
-			turn(vTurn, 0.2)
-			dist,rot,boolean = wall_check(0)
+		while(free_th > dist): # Turns until it is free to move: the distance is defined by the global variable 'free_th'
+			turn(vTurn, 0.25) # turns right (vTurn > 0) to avoid the wall on the left
+			dist,rot,boolean = wall_check(0) # Re-calculate the distance after every turn to check the while condition
 		print("OK, now it's ok.")
 	else:
 		print("Wall on my right ... turn left!")
-		while(dist < free_th):
-			turn(-vTurn, 0.2) # Turn until it is free to move; re-calculates the distance from the wall
-			dist,rot,boolean = wall_check(0)
+		while(free_th > dist): # Turns until it is free to move: the distance is defined by the global variable 'free_th'
+			turn(-vTurn, 0.25) # turn left (vTurn < 0) to avoid the wall on the right
+			dist,rot,boolean = wall_check(0) # Re-calculate the distance after every turn to check the while condition
 		print("OK, now it's ok.")	
 ```
 it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left; then there are several conditions that can make the program decide if the wall is on the right and if it is on the left: using a `while` loop the robot can rotate till the distance from the wall detected is sufficient to make it start again the driving action.
@@ -111,12 +112,14 @@ def wall_check(rot_token):
 	dist=100
     	for token in R.see():
         	if token.dist < dist and token.info.marker_type is MARKER_TOKEN_GOLD and (rot_token - view_range) <= token.rot_y <= (rot_token + view_range):
+        	# in the if statement there are conditions in and because all of them have to be satisfied to detect a wall corectly.
+        	# In particular the robot has a range of view, determined by the global varable 'view_range' and can detect walls only in the direction passed as parameter to the function
             		dist=token.dist
 	    		rot_y=token.rot_y
-    	if dist==100:
-		return -1, -1, False
-    	else:
-   		return dist, rot_y, True
+    	if dist==100: # it means no wall has been detected
+		return -1, -1, False # int this case, the function returns are negative distance, negative angle and a False boolean
+    	else: # it means a wall has been detected
+   		return dist, rot_y, True # in this case, the function return are the distance, the rotation of the wall and a True boolean
 ```
 it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
 As it can be seen the wall are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from the token (`MARKER_TOKEN_SILVER`).
@@ -126,25 +129,26 @@ the main program now checks if the robot is close enough to the token detected: 
 * `catch_token()`:
 ```python
 def catch_token(dist,rot_y):
-	if dist <= d_th:
+	if dist <= d_th: # it means that the token is as near as necessary to be grabbed
       		print("Found it!")
-      		if R.grab(): 
+      		if R.grab(): # returns a True boolean if the robot has been able to grab the token
       			print("Gotcha!")
-    			turn(vTurn, 3)
-	    		R.release()
+    			turn(vTurn, 1.5) # turns right (clockwise) to put the token backward, in respect to its current direction
+	    		R.release() # releases the token
 	    		print("Released")
-	    		turn(-vTurn,3)
+	    		drive(-vDrive/2,0.8) # drive backward to take space for the next action
+	    		turn(-vTurn,1.5) # turns again, this time on the left (anticlockwise) to re-take the direction and proceed in the arena
 	    		print("Move on!!!")
-		else:
+		else:# the R.grab() returns a False boolean so the token cannot be grabbed and the robot has to move nearer to it
             		print("Aww, I'm not close enough.")
-	elif -a_th <= rot_y <= a_th:
-		drive(vDrive, 0.5)
-	elif rot_y < -a_th: 
+	elif -a_th <= rot_y <= a_th: # checks if the token rotation is inside a certain angle range, defined by the gloab varible 'a_th'
+		drive(vDrive, 0.5) # If this condition is satisfied the robot move forward to the token
+	elif rot_y < -a_th: # checks is the token is more on the left in respect to the direction of the robot, which is the 0 degree
 		print("Left a bit...")
-		turn(-vTurn_dir, 0.25)
-	elif rot_y > a_th:
+		turn(-vTurn_dir, 0.2) # if the condition is satified the robot turns on the left
+	elif rot_y > a_th: # checks is the token is more on the right in respect to the direction of the robot, which is the 0 degree
 		print("Right a bit...")
-		turn(+vTurn_dir, 0.25)
+		turn(+vTurn_dir, 0.2) # if the condition is satified the robot turns on the right
 ```
 this function drives the robot to catch the token  by making some corrections during the movement.
 
@@ -155,19 +159,20 @@ def find_silver_token():
 	dist=100
     	for token in R.see():
         	if token.dist < dist and token.info.marker_type is MARKER_TOKEN_SILVER and -see_angle <= token.rot_y <= see_angle:
+        	# the token rotation is determined only in a range of view, determined by the global variable 'see_angle'
             		dist=token.dist
 	    		rot_y=token.rot_y
-    	if dist==100:
-		return -1, -1
-    	else:
-   		return dist, rot_y
+    	if dist==100: # it means no token has been detected
+		return -1, -1 # int this case, the function returns are negative distance, negative angle
+    	else: # it means a token has been detected
+   		return dist, rot_y # in this case, the function return are the distance, the rotation of the token
 ```
 and a set of global variables, in order to have a better adaptation to any corrections:
 ```python
 a_th = 2.0
 """ float: Threshold for the control of the linear distance"""
 
-d_th = 0.4
+d_th = 0.6
 """ float: Threshold for the control of the orientation"""
 
 free_th = 0.85
@@ -182,12 +187,12 @@ view_range = 35
 see_angle = 45
 """int: Angle of vision for the robot to detect the silver token"""
 
-vTurn = 20
+vTurn = 40
 """int: Velocity module for turning"""
 
-vTurn_dir = 4
+vTurn_dir = 9.5
 """int: Velocity module for turning while nearby a wall"""
 
-vDrive = 20
+vDrive = 40
 """int: Velocity module for driving"""
 ```
