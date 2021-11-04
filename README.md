@@ -53,6 +53,11 @@ else:# the R.grab() returns a False boolean so the token cannot be grabbed and t
 ```
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; to release the token it is used the `R.release()` function.
 
+In the short simulation that follows it can be clearly seen all the main function used by the robot: `drive(...)`, `turn(...)`, `grab()` and `release()`
+
+https://user-images.githubusercontent.com/62358773/140278957-d3ab29c9-ff62-4a9d-80a6-670361d8cf37.mov
+
+
 ### Token
 Tokens are of two types, as it can be seen in the arena picture.
 Each of them is a `Marker` and is characterised by many properties which describe all its characteristics and position in the space. T
@@ -213,3 +218,10 @@ vTurn_dir = 9.5
 vDrive = 40
 """int: Velocity module for driving"""
 ```
+### Video demontration
+To show what the robot is asked to do it is given a shprt video-demonstration of the robot moving (it is choosen only a piece due to size restrictions in GitHub video):
+(THe simulation has a *X2* speed)
+
+https://user-images.githubusercontent.com/62358773/140278444-3c3f911a-c6ca-43ef-b4f2-10abee4a3c78.mov
+
+
