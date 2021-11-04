@@ -7,7 +7,7 @@ The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org
 Once the dependencies are installed, simply run the `test.py` script to test out the simulator as: `python2 run.py file.py` where `file.py` contains the code.
 
 ## Goal of the assignment
-The goal for this assignment is to make a robot move continuously around a specific arena: the robot cannot touch any wall, representeed by the golden tokens, while has to grab all the silver tokens met along the path and put them backward. Once it has completed this action it has to move on and continues as before.
+The goal for this assignment is to make a robot move continuously around a specific arena: the robot cannot touch any wall, represented by the golden tokens, while has to grab all the silver tokens met along the path and put them backward. Once it has completed this action it has to move on and continues as before.
 
 ## Elements in the project
 ### Arena
