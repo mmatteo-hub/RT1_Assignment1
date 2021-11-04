@@ -55,8 +55,7 @@ so if the `R.grab()` is successful the robot will move the token backward, other
 
 In the short simulation that follows it can be clearly seen all the main function used by the robot: `drive(...)`, `turn(...)`, `grab()` and `release()`
 
-https://user-images.githubusercontent.com/62358773/140278957-d3ab29c9-ff62-4a9d-80a6-670361d8cf37.mov
-
+![gr_vid](https://user-images.githubusercontent.com/62358773/140282750-61a88b6e-946c-40e6-b2fe-f2737ae24f28.gif)
 
 ### Token
 Tokens are of two types, as it can be seen in the arena picture.
