@@ -11,7 +11,7 @@ The goal for this assignment is to make a robot move continuously around a speci
 
 ## Elements in the project
 ### Arena
-The arena has a shape gien, with the wall represented by the golden tokens in which there are the silver tokens, as follows:
+The arena has a given shape, with walls represented by the golden tokens and the presence of silver tokens, as follows:
 ![arena](https://user-images.githubusercontent.com/62358773/139511599-a028eff0-8865-4ff4-8896-819c297a69df.jpg)
 
 ### Robot
@@ -35,7 +35,7 @@ R.motors[0].m1.power = -25
 The functions used to activate the motor are `drive(speed,time)` and `turn(speed,time)`: the first one makes the robot go straight, for a certain time `time` at a certain speed `speed`, while the second makes it turn, always for a certain time `time` and at a certain speed `speed`; as the robot is given a `speed` > 0 it makes it turn clockwise and if `speed` < 0 on the opposite.
 
 #### Grab/Release functions
-The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of `d_th` metres (this value is not fixed and it is defined as 0.6 in the code). In order to make the robot grab the token we use the function `R.grab()` which returns a boolean value, `True`or `False` depending on what the robot has done. The piece of code we use is:
+The robot, as already said, has two arms (grabbers) able to pick up the silver token and to put it backward when the relative token is at a distance of `d_th` metres (this value is not fixed and it is defined as 0.6 in the code). In order to make the robot grab the token it is used the function `R.grab()` which returns a boolean value, `True` or `False` depending on what the robot has done. The piece of code used is:
 ```python
 vTurn = 40
 """int: Velocity module for turning"""
@@ -53,13 +53,13 @@ else:# the R.grab() returns a False boolean so the token cannot be grabbed and t
 ```
 so if the `R.grab()` is successful the robot will move the token backward, otherwise it means the robot is not close enough so the program will act properly; to release the token it is used the `R.release()` function.
 
-In the short simulation that follows it can be clearly seen all the main function used by the robot: `drive(...)`, `turn(...)`, `grab()` and `release()`
+In the short simulation that follows it can be clearly seen all the main function used by the robot such as: `drive(...)`, `turn(...)`, `grab()` and `release()`
 
 ![gr_vid](https://user-images.githubusercontent.com/62358773/140282750-61a88b6e-946c-40e6-b2fe-f2737ae24f28.gif)
 
 ### Token
 Tokens are of two types, as it can be seen in the arena picture.
-Each of them is a `Marker` and is characterised by many properties which describe all its characteristics and position in the space. T
+Each of them is a `Marker` and is characterised by many properties which describe all its characteristics and position in the space.
 Each `Marker` object has the following attributes:
 
 * `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
@@ -94,13 +94,13 @@ Thanks to a flowchart it can be described the general structure, moreover also t
 ![main](https://user-images.githubusercontent.com/62358773/139657231-093e1cf8-2bac-422a-8ffe-86e34e876ab3.jpg)
 
 * `fnc_in()`:
-The first function is the `fnc_in()` which makes the robot starting the movement, it is structured as follows:
+The first function is the `fnc_in()` which makes the robot start the movement, it is structured as follows:
 ```python
 def fnc_in():
 	drive(2*vDrive,0.1) # this function allows the robot moving forward
 	avoid_collision() # this function allows the robot avoiding the walls while moving
 ```
-there are the function `drive(speed,time)`, already described, and the `avoid collision()`, responsible of making the robot stay far from the wall. 
+there are the function `drive(speed,time)`, already described, and the `avoid collision()` function, responsible of making the robot stay far from the wall. 
 
 Below it is described all the functions used in the program.
 
@@ -125,7 +125,7 @@ def avoid_collision():
 			dist,rot,boolean = wall_check(0) # Re-calculate the distance after every turn to check the while condition
 		print("OK, now it's ok.")	
 ```
-it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left woth a pre-determined range, as it can be seen clearly in the following picture:
+it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left with a pre-determined range, as it can be seen clearly in the following picture:
 
 ![robot_collision](https://user-images.githubusercontent.com/62358773/140342829-5c2310ff-1fa6-4e8d-84f9-7764f7b5cac9.jpg)
 
@@ -146,10 +146,10 @@ def wall_check(rot_token):
     	else: # it means a wall has been detected
    		return dist, rot_y, True # in this case, the function return are the distance, the rotation of the wall and a True boolean
 ```
-it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively (the figure above explains it clearly).
+it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`= 0, 90, -90 respectively (the figure above explains it clearly).
 As it can be seen walls are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from tokens (`MARKER_TOKEN_SILVER`).
 
-The main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`, where `dist` represents the token distance, it means there is a wall between the token and the robot so the program starts again the `avoid_collision()`, otherwise with any dangerous wall so the robot can catch the token
+The main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`, where `dist` represents the token distance, it means there is a wall between the token and the robot so the program starts again the `avoid_collision()` function, otherwise there are not any dangerous wall so the robot can catch the token
 
 * `catch_token()`:
 ```python
@@ -175,7 +175,7 @@ def catch_token(dist,rot_y):
 		print("Right a bit...")
 		turn(+vTurn_dir, 0.2) # if the condition is satified the robot turns on the right
 ```
-this function drives the robot to catch the token  by making some corrections during the movement. If the robot is close enough to the token it will grab it, otherwise it will have to move closer.
+this function drives the robot to catch the token by making, if necessary, some corrections during the movement. If the robot is close enough to the token it will grab it, otherwise it will have to move closer.
 
 The program contains also the `find_silver_token()` defined as:
 
@@ -192,7 +192,7 @@ def find_silver_token():
     	else: # it means a token has been detected
    		return dist, rot_y # in this case, the function return are the distance, the rotation of the token
 ```
-It is shown how the robot sees in the following picture:
+It is shown how the robot sees and looks for silver token in the following picture:
 
 ![robot_silver](https://user-images.githubusercontent.com/62358773/140338406-7628e8db-2fa5-437b-969b-8dbcea5e6a3a.jpg)
 
