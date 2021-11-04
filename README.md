@@ -125,7 +125,11 @@ def avoid_collision():
 			dist,rot,boolean = wall_check(0) # Re-calculate the distance after every turn to check the while condition
 		print("OK, now it's ok.")	
 ```
-it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left; then there are several conditions that can make the program decide if the wall is on the right and if it is on the left: using a `while` loop the robot can rotate till the distance from the wall detected is sufficient to make it start again the driving action.
+it can be seen that the presence of a wall is checked in front of the robot, on the right and on the left woth a pre-determined range, as it can be seen clearly in the following picture:
+
+![robot_collision](https://user-images.githubusercontent.com/62358773/140342829-5c2310ff-1fa6-4e8d-84f9-7764f7b5cac9.jpg)
+
+Then there are several conditions that can make the program decide if the wall is on the right and if it is on the left: using a `while` loop the robot can rotate till the distance from the wall detected is sufficient to make it start again the driving action.
 
 * `d,r,b = wall_check(rot_token)`:
 ```python
@@ -142,7 +146,7 @@ def wall_check(rot_token):
     	else: # it means a wall has been detected
    		return dist, rot_y, True # in this case, the function return are the distance, the rotation of the wall and a True boolean
 ```
-it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively.
+it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`=0, 90, -90 respectively (the figure above explains it clearly).
 As it can be seen walls are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from tokens (`MARKER_TOKEN_SILVER`).
 
 The main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`, where `dist` represents the token distance, it means there is a wall between the token and the robot so the program starts again the `avoid_collision()`, otherwise with any dangerous wall so the robot can catch the token
@@ -188,7 +192,13 @@ def find_silver_token():
     	else: # it means a token has been detected
    		return dist, rot_y # in this case, the function return are the distance, the rotation of the token
 ```
-and a set of global variables, in order to have a better adaptation to any corrections:
+It is shown how the robot sees in the following picture:
+
+![robot_silver](https://user-images.githubusercontent.com/62358773/140338406-7628e8db-2fa5-437b-969b-8dbcea5e6a3a.jpg)
+
+It can be seen that the range to detect silver tokens is 90°, as already seen in the function above.
+
+It is also given a set of global variables, with a relative brief description, in order to have a better adaptation to any corrections:
 ```python
 a_th = 2.0
 """ float: Threshold for the control of the linear distance"""
