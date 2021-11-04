@@ -220,7 +220,7 @@ vDrive = 40
 ```
 ### Video demontration
 To show what the robot is asked to do it is given a shprt video-demonstration of the robot moving (it is choosen only a piece due to size restrictions in GitHub video):
-(THe simulation has a *X2* speed)
+(The simulation has a *X2* speed for the same reason as before)
 
 https://user-images.githubusercontent.com/62358773/140278444-3c3f911a-c6ca-43ef-b4f2-10abee4a3c78.mov
 
