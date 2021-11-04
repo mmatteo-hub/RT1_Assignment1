@@ -225,4 +225,6 @@ https://user-images.githubusercontent.com/62358773/140280059-6e1c5774-05ab-4af9-
 
 From the simulation it is crearly evident also the `avoid_collision()` function used to drive the robot and keep it far from walls.
 
-
+### Future improvements
+Since the robot has many distance sensors to be used it could be also useful to detect a possible path to be followed: after an accurate scansion of the free "roads" that can be taken the robot can directly go to its destination, the token, without having to bounce from one side to another to find the correct way.
+In the project has not been implemented a system of localization for the tokens but with this additive feature it can be also detected if a token is available immediately or not also wothout having a scansion of the entire arena.
