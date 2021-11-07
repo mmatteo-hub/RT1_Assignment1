@@ -4,6 +4,7 @@ import time
 from sr.robot import *
 
 # Global variables defined to have a more readable code and a more velocity to correct parameters during testing
+
 a_th = 2.0
 """ float: Threshold for the control of the linear distance"""
 
