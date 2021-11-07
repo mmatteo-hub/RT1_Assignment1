@@ -111,7 +111,7 @@ while 1:
 	...
 ```
 
-Below there is the description and the code for every function used.
+Below there is a brief description and the code for every function used.
 
 * `fnc_in()`:
 This function makes the robot start the movement, it is structured as follows:
