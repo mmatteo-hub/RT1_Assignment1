@@ -7,11 +7,11 @@ The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org
 Once the dependencies are installed, simply run the `test.py` script to test out the simulator as: `python2 run.py file.py` where `file.py` contains the code.
 
 ## Goal of the assignment
-The goal for this assignment is to make a robot move continuously around a specific arena: the robot cannot touch any wall, represented by the golden tokens, while has to grab all the silver tokens met along the path and put them backward. Once it has completed this action it has to move on and continues as before.
+The goal for this assignment is to make a robot move continuously around a specific arena: the robot cannot touch any wall, represented by golden tokens, while has to grab all the silver tokens met along the path and put them backward. Once it has completed this action it has to move on and continues as before with the remanining tokens.
 
 ## Elements in the project
 ### Arena
-The arena has a given shape, with walls represented by the golden tokens and the presence of silver tokens, as follows:
+The arena has a given shape, with walls represented by golden tokens and the presence of silver tokens, as follows:
 ![arena](https://user-images.githubusercontent.com/62358773/139511599-a028eff0-8865-4ff4-8896-819c297a69df.jpg)
 
 ### Robot
@@ -20,7 +20,7 @@ The robot is the following:
 
 ![robot](https://user-images.githubusercontent.com/62358773/139828348-cc5e2ea0-5f71-447a-ac7f-8b7ef74f3324.png)
 
-It has distance sensors on all sides, so it can detect a wall from -180° to 180°; the reference of 0° is the front direction, the angle increase by moving in clockwise direction taking as reference the 0° position and decrease in the other rotation direction.
+It has distance sensors on all sides, so it can detect a wall from -180° to 180°; the reference of 0° is the front direction and the angle increases by moving in clockwise direction taking as reference the 0° position and decreases in the other rotation direction.
 
 #### Internal structure
 ##### Motors: Robot API
@@ -88,21 +88,39 @@ although, the mainly used in the program are:
 
 ### Code: main
 
-Inside the main there is the code to drive the robot around the arena: there are several functions in order to make the code more readable and avoid having a single block of code.
+Inside the `main` there is the code to drive the robot around the arena: there are several functions in order to make the code more readable and avoid having a single block of code.
 Thanks to a flowchart it can be described the general structure, moreover also the functions will be analised properly:
 
 ![main](https://user-images.githubusercontent.com/62358773/139657231-093e1cf8-2bac-422a-8ffe-86e34e876ab3.jpg)
 
+The program starts with `fnc_in()` responsible of initialising the robot movement in the arena.
+The second step is the check of the possible presence of a silver token by `dust,rot_y = find_silver_token()` which looks for a silver token in a pre-determined range of view as we can see more detailed later.
+Now the program has to take a decision based of the return of the previous function:
+* if the token has been detected so `dist ≠ -1`: the program goes on
+* otherwise the program returns to the `fnc_in()` and then continues.
+
+In the case the program detects a silver token it has to check also the possible presence of a wall in the direction of the token using the following function `d,r,b = wall_check(rot_y)`.
+By using this function the program can make another important decision in order to complete its task:
+* if `d < dist` so it measns the wall is nearer than the token the program has to compute the `avoid collision()` function to drive the robot without touching any wall;
+* otherwise it means there are no wall between the robot and the token so the robot can go to grab it using the `catch_token()` function.
+
+In both cases program's next step is the return to the `fnc_in()` function and the restart with the decision block.
+To implement this there is an infinite loop made by
+```python
+while 1:
+	...
+```
+
+Below there is the description and the code for every function used.
+
 * `fnc_in()`:
-The first function is the `fnc_in()` which makes the robot start the movement, it is structured as follows:
+This function makes the robot start the movement, it is structured as follows:
 ```python
 def fnc_in():
 	drive(2*vDrive,0.1) # this function allows the robot moving forward
 	avoid_collision() # this function allows the robot avoiding the walls while moving
 ```
-there are the function `drive(speed,time)`, already described, and the `avoid collision()` function, responsible of making the robot stay far from the wall. 
-
-Below it is described all the functions used in the program.
+Inside its body there are also the function `drive(speed,time)`, already described, and the `avoid collision()` function, responsible of making the robot stay far from the wall. 
 
 * `avoid_collision()`:
 ```python
@@ -149,7 +167,7 @@ def wall_check(rot_token):
 it allows the robot checking the presence of a wall in a particular direction, determined by the parameter `rot_token`, that is an angle. Inside the `avoid_collision()` the `wall_check(rot_token)` function can detect a wall in front, on the right or on the left with `rot_token`= 0, 90, -90 respectively (the figure above explains it clearly).
 As it can be seen walls are characterised by a colour (`MARKER_TOKEN_GOLD`) which distinguishes them from tokens (`MARKER_TOKEN_SILVER`).
 
-The main program now checks if the robot is close enough to the token detected: the function returns `d` which is the wall distance and if `d`< `dist`, where `dist` represents the token distance, it means there is a wall between the token and the robot so the program starts again the `avoid_collision()` function, otherwise there are not any dangerous wall so the robot can catch the token
+The main program checks if the robot is close enough to the token detected and if there are any walls between it and the token. as said at the beginning if no, the program can catch the token, otherwise it has to avoid walls.
 
 * `catch_token()`:
 ```python
@@ -175,7 +193,7 @@ def catch_token(dist,rot_y):
 		print("Right a bit...")
 		turn(+vTurn_dir, 0.2) # if the condition is satified the robot turns on the right
 ```
-this function drives the robot to catch the token by making, if necessary, some corrections during the movement. If the robot is close enough to the token it will grab it, otherwise it will have to move closer.
+this function drives the robot to catch the token by making, if necessary, some corrections during the movement. If the robot is close enough to the token it will grab it, otherwise it will have to move closer. Corrections are made depending of the anglo of rotation of the robot with respect to the token and the range of allineation is determined by the variable `a_th`.
 
 The program contains also the `find_silver_token()` defined as:
 
