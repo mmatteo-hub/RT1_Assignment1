@@ -256,4 +256,4 @@ From the simulation it is crearly evident also the `avoid_collision()` function 
 
 ### Future improvements
 Since the robot has many distance sensors to be used it could be also useful to detect a possible path to be followed: after an accurate scansion of the free "roads" that can be taken the robot can directly go to its destination, the token, without having to bounce from one side to another to find the correct way.
-In the project has not been implemented a system of localization for the tokens but with this additive feature it can be also detected if a token is available immediately or not also wothout having a scansion of the entire arena.
+In the project has not been implemented a system of localization for tokens but with this possible additive feature it can be also detected if a token is available immediately or not also without having a scansion of the entire arena, since the robot would know tokens' position in the arena.
