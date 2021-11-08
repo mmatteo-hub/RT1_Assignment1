@@ -96,15 +96,15 @@ Thanks to a flowchart it can be described the general structure, moreover also t
 ![main](https://user-images.githubusercontent.com/62358773/139657231-093e1cf8-2bac-422a-8ffe-86e34e876ab3.jpg)
 
 The program starts with `fnc_in()` responsible of initialising the robot movement in the arena.
-The second step is the check of the possible presence of a silver token by `dust,rot_y = find_silver_token()` which looks for a silver token in a pre-determined range of view as we can see more detailed later.
+The second step is the check of the possible presence of a silver token by `dist,rot_y = find_silver_token()` which looks for a silver token in a pre-determined range of view as we can see more detailed later.
 Now the program has to take a decision based of the return of the previous function:
 * if the token has been detected so `dist ≠ -1`: the program goes on
 * otherwise the program returns to the `fnc_in()` and then continues.
 
 In the case the program detects a silver token it has to check also the possible presence of a wall in the direction of the token using the following function `d,r,b = wall_check(rot_y)`.
 By using this function the program can make another important decision in order to complete its task:
-* if `d < dist` so it measns the wall is nearer than the token the program has to compute the `avoid collision()` function to drive the robot without touching any wall;
-* otherwise it means there are no wall between the robot and the token so the robot can go to grab it using the `catch_token()` function.
+* if `d < dist` so it measns the wall is nearer than the token the program has to compute the `avoid collision()` function to drive the robot through the arena without touching any wall;
+* otherwise it means there are no walls between the robot and the token so the robot can go to grab it using the `catch_token()` function.
 
 In both cases program's next step is the return to the `fnc_in()` function and the restart with the decision block.
 To implement this there is an infinite loop made by
@@ -113,7 +113,7 @@ while 1:
 	...
 ```
 
-Below there is a brief description and the code for every function used.
+Below there is a brief description of the code for every function used.
 
 * `fnc_in()`:
 This function makes the robot start the movement, it is structured as follows:
