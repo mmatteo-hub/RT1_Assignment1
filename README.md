@@ -1,5 +1,5 @@
 # Research Track: Assignment #1
-# Python Robotics Simulator
+## Python Robotics Simulator
 ### Professor [Carmine Recchiuto](https://github.com/CarmineD8)
 ### Student: [Matteo Maragliano](https://github.com/mmatteo-hub)
 
