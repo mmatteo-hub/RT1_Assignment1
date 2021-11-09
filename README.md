@@ -113,6 +113,7 @@ while 1:
 	...
 ```
 
+
 Below there is a brief description of the code for every function used.
 
 * `fnc_in()`:
