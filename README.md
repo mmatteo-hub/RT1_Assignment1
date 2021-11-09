@@ -113,6 +113,7 @@ while 1:
 	...
 ```
 
+### Functions used in the program and brief description of their behaviour
 
 Below there is a brief description of the code for every function used.
 
